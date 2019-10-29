@@ -1,0 +1,102 @@
+﻿@{
+    ViewData["Version"] = "v=1.0";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" type="image/png" href="@Html.Raw(SqlDAL.Instance.GetSetting("IconPath").Value)" />
+    <title>Social Care</title>
+    <link rel="stylesheet" type="text/css" href="~/DataTables/datatables.min.css?@ViewData["Version"]" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css?@ViewData["Version"]" />
+
+    <link href="~/assets/css/app.min.css?@ViewData["Version"]" rel="stylesheet" type="text/css" />
+    <link href="~/css/E.css?@ViewData["Version"]" rel="stylesheet" type="text/css" />
+    <link href="~/jquery-ui/jquery-ui.min.css?@ViewData["Version"]" rel="stylesheet" type="text/css" />
+    <link href="~/css/tempusdominus-bootstrap-4.min.css?@ViewData["Version"]" rel="stylesheet" type="text/css" />
+    <link href="~/fwe/css/all.min.css?@ViewData["Version"]" rel="stylesheet" type="text/css" />
+    <link href="~/css/select2.min.css" rel="stylesheet" type="text/css" />
+    <link href="~/css/select2-bootstrap4.min.css" rel="stylesheet" type="text/css" />
+
+    <script src="~/lib/jquery/dist/jquery.js?@ViewData["Version"]"></script>
+    <script src="~/jquery-ui/jquery-ui.min.js?@ViewData["Version"]"></script>
+    <script src="~/js/E.js?@ViewData["Version"]"></script>
+    <script src="~/ckeditor/ckeditor.js?@ViewData["Version"]"></script>
+    <script src="~/ckfinder/ckfinder.js?@ViewData["Version"]"></script>
+    <script src="~/lib/signalr/dist/browser/signalr.js?@ViewData["Version"]"></script>
+</head>
+<body>
+    <div class="loading" id="spinner">Loading&#8230;</div>
+    <div class="wrapper">
+        <div class="left-side-menu">
+            <div class="slimscroll-menu">
+                <a href="admin" class="logo text-center mb-4">
+                    <img src="@Html.Raw(SqlDAL.Instance.GetSetting("LogoPath").Value)" class="img-fit-lg" alt="">
+                </a>
+                <!--- Sidemenu -->
+                <ul class="metismenu side-nav">
+                    @await Html.PartialAsync("_Navigation")
+                </ul>
+            </div>
+        </div>
+        <div class="content-page">
+            <div class="content">
+                <!-- Topbar Start -->
+                <div class="navbar-custom">
+                    <ul class="list-unstyled topbar-right-menu float-right mb-0">
+                        @await Html.PartialAsync("_Notification")
+                        @await Html.PartialAsync("_LoginPartial")
+                    </ul>
+                    <div class="app-search">
+                        <h3 id="web-title">@SqlDAL.Instance.GetSetting("Title").Value</h3>
+                    </div>
+                    <button class="button-menu-mobile open-left disable-btn">
+                        <i class="mdi mdi-menu"></i>
+                    </button>
+                </div>
+                <div class="container-fluid mt-3">
+                    <div class="row" style="width:100%">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    @RenderBody()
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-6">
+                                @DateTime.Now.Year © Education - Developed by Dreamer Group
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            hideSpinner();
+        })
+    </script>
+    <script src="~/assets/js/app.min.js?@ViewData["Version"]"></script>
+    <script src="~/js/jquery.form.min.js?@ViewData["Version"]"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js?@ViewData["Version"]"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js?@ViewData["Version"]"></script>
+    <script type="text/javascript" src="~/DataTables/datatables.min.js?@ViewData["Version"]"></script>
+    <script src="~/js/moment.min.js?@ViewData["Version"]"></script>
+    <script src="~/js/tempusdominus-bootstrap-4.min.js?@ViewData["Version"]"></script>
+    <script src="~/js/inputmask/inputmask.js?@ViewData["Version"]"></script>
+    <script src="~/js/inputmask/inputmask.extensions.js?@ViewData["Version"]"></script>
+    <script src="~/js/inputmask/jquery.inputmask.js?@ViewData["Version"]"></script>
+    <script src="~/js/inputmask/bindings/inputmask.binding.js?@ViewData["Version"]"></script>
+    <script src="~/js/select2.min.js"></script>
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

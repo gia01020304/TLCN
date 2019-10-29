@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <UserSecretsId>aspnet-MonitoringSocialNetworkWeb-E3F3B2E2-D8D2-4CB0-95DA-C79DF69162E3</UserSecretsId>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+  </PropertyGroup>
+
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.4" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\IntegrateService\Business\Business.csproj" />
+    <ProjectReference Include="..\..\IntegrateService\CommentAnalysis\CommentAnalysis.csproj" />
+    <ProjectReference Include="..\..\IntegrateService\Core\Core.csproj" />
+    <ProjectReference Include="..\..\IntegrateService\Main\Main.csproj" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <Folder Include="wwwroot\NewFolder\" />
+  </ItemGroup>
+
+</Project>

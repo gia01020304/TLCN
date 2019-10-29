@@ -1,0 +1,33 @@
+﻿@model SocialConfig
+<div class="col-12">
+    <input asp-for="Id" class="unactive">
+    <div class="form-group">
+        <label asp-for="AppId"></label>
+        <input asp-for="AppId" class="form-control mr-1" />
+        <span asp-validation-for="AppId" class="unactive"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AppSecret"></label>
+        <input asp-for="AppSecret" class="form-control mr-1" />
+        <span asp-validation-for="AppSecret" class="unactive"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="AppType"></label>
+        <select asp-for="AppType" asp-items="Html.GetEnumSelectList<AppType>()" class="form-control mr-1"></select>
+        <span asp-validation-for="AppType" class="unactive"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Token"></label>
+        <input asp-for="Token" class="form-control mr-1" />
+        <span asp-validation-for="Token" class="unactive"></span>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        var id = $('#Id').val();
+        if (id !== "") {
+
+        } else {
+        }
+    })
+</script>

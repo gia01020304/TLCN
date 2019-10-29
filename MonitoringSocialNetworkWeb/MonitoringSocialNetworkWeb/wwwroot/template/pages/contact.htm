@@ -1,0 +1,38 @@
+﻿<section class="ftco-section contact-section">
+    <div class="container">
+        <div class="row d-flex mb-5 contact-info">
+            <div class="col-md-3 d-flex">
+                <div class="bg-light align-self-stretch box p-4 text-center">
+                    <h3 class="mb-4">Địa Chỉ</h3>
+                    <p>{{System.address1}}</p>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex">
+                <div class="bg-light align-self-stretch box p-4 text-center">
+                    <h3 class="mb-4">Số Điện Thoại</h3>
+                    <p>{{System.phoneNumber}}</p>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex">
+                <div class="bg-light align-self-stretch box p-4 text-center">
+                    <h3 class="mb-4">Địa Chỉ Email</h3>
+                    <p>{{System.email}}</p>
+                </div>
+            </div>
+            <div class="col-md-3 d-flex">
+                <div class="bg-light align-self-stretch box p-4 text-center">
+                    <h3 class="mb-4">Website</h3>
+                    <p><a href="#" id="my-web"></a></p>
+                </div>
+            </div>
+        </div>
+        <div class="row d-flex mb-5 contact-info">
+            <div ng-include="MapView" class="w-100"></div>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        $('#my-web').attr("href", document.location.origin).html(document.location.origin);
+    })
+</script>

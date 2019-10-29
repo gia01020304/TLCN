@@ -1,0 +1,52 @@
+﻿@{
+    ViewData["Version"] = "v=1.0";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Social Care</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css?@ViewData["Version"]" />
+    <link rel="stylesheet" type="text/css" href="~/DataTables/datatables.min.css?@ViewData["Version"]" />
+    <link href="~/assets/css/app.min.css?@ViewData["Version"]" rel="stylesheet" type="text/css" />
+    <link href="~/css/E.css?@ViewData["Version"]" rel="stylesheet" type="text/css" />
+    <link href="~/jquery-ui/jquery-ui.min.css?@ViewData["Version"]" rel="stylesheet" type="text/css" />
+
+    <script src="~/lib/jquery/dist/jquery.js?@ViewData["Version"]"></script>
+    <script type="text/javascript" src="~/DataTables/datatables.min.js?@ViewData["Version"]"></script>
+    <script src="~/jquery-ui/jquery-ui.min.js?@ViewData["Version"]"></script>
+    <script src="~/js/E.js?@ViewData["Version"]"></script>
+
+</head>
+<body>
+    <style>
+        .footer {
+            left: 400px;
+            border-top: unset;
+        }
+    </style>
+    <div class="loading" id="spinner">Loading&#8230;</div>
+    @RenderBody()
+    <footer class="footer text-center">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    @DateTime.Now.Year © Education - Developed by Dreamer Group
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        $(document).ready(function () {
+            hideSpinner();
+        })
+    </script>
+
+    <script src="~/lib/jquery-validation/dist/jquery.validate.js?@ViewData["Version"]"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js?@ViewData["Version"]"></script>
+    <script src="~/assets/js/app.min.js?@ViewData["Version"]"></script>
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

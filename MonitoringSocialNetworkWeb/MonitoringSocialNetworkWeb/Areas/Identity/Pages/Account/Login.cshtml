@@ -1,0 +1,65 @@
+﻿@page
+@model LoginModel
+
+@{
+    Layout = "_LayoutEmpty";
+    ViewData["Title"] = "Login";
+}
+<div class="">
+    <div class="account-pages mt-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-5">
+                    <div class="card">
+                        <!-- Logo -->
+                        <div class="card-header pt-4 pb-4 text-center bg-primary">
+                            <h1 class=" " style="color:white">Social Care</h1>
+                        </div>
+                        <div class="card-body p-4">
+                            <div class="text-center w-75 m-auto">
+                                <h4 class="text-dark-50 text-center mt-0 font-weight-bold">Login</h4>
+                            </div>
+                            <form method="post" asp-route="login" id="frm-login">
+                                <div class="form-group mb-3">
+                                    <label asp-for="Input.Email"></label>
+                                    <input asp-for="Input.Email" class="form-control" type="email" />
+                                    <span asp-validation-for="Input.Email" class="unactive"></span>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <label asp-for="Input.Password"></label>
+                                    <input asp-for="Input.Password" class="form-control" />
+                                    <span asp-validation-for="Input.Password" class="unactive"></span>
+                                </div>
+                                <div class="form-group mb-3">
+                                    <div class="custom-control custom-checkbox">
+                                        <input asp-for="Input.RememberMe" class="custom-control-input" type="checkbox" />
+                                        <label class="custom-control-label" asp-for="Input.RememberMe"></label>
+                                    </div>
+                                </div>
+                                <div class="form-group mb-0 text-center">
+                                    <button class="btn btn-primary" type="submit"> Sign In </button>
+                                </div>
+                            </form>
+                        </div> <!-- end card-body -->
+                    </div>
+                </div> <!-- end col -->
+            </div>
+            <!-- end row -->
+        </div>
+        <!-- end container -->
+    </div>
+    <!-- end page -->
+</div>
+<script>
+    createToolTip('#frm-login');
+    $(document).ready(function () {
+        $("body").addClass("authentication-bg");
+        @{
+            var countError = ViewContext.ViewData.ModelState.ErrorCount;
+            if (countError>0)
+            {
+                @:toastDanger("User Name or Password incorrect!</br>Please try again.");
+            }
+         }
+    })
+</script>

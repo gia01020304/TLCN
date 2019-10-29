@@ -1,0 +1,20 @@
+﻿<section class="ftco-gallery">
+    <div class="container-wrap">
+        <div class="row no-gutters" id="footer-carol">
+            <div class="col-md-3 ftco-animate" ng-repeat="model in FooterImage">
+                <a href="{{model.picturePath}}" class="gallery image-popup img d-flex align-items-center" style="background-image: url({{model.picturePath}});">
+                    <div class="icon mb-4 d-flex align-items-center justify-content-center">
+                        <span class="icon-instagram"></span>
+                    </div>
+                </a>
+            </div>
+            
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        var scope = angular.element('#System').scope();
+        scope.GetFooterImage();
+    })
+</script>

@@ -1,0 +1,74 @@
+﻿@{
+    ViewData["Title"] = "FanPage Configure";
+    ViewBag.Template = "Template/AddEditFanPageConfigure";
+    ViewBag.Url = Url.Action("AddFanPageConfigure", "FanPageConfigure");
+    ViewBag.Method = "Post";
+    ViewBag.FormId = "FanPageConfigure";
+    ViewBag.TableId = "FanPageConfigure";
+}
+<h3>@ViewData["Title"]</h3>
+<table id="tbl-@ViewBag.TableId" class="table table-striped dt-responsive nowrap tbl-crud">
+    <thead>
+        <tr>
+            <th class="all"></th>
+            <th class="all"></th>
+            <th class="all"></th>
+            <th class="all"></th>
+            <th class="all"></th>
+            <th class="all"></th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<partial name="_Modal">
+    <script>
+
+        $(document).ready(function () {
+            generateTable(
+                {
+                    IdTable: 'tbl-@ViewBag.TableId',
+                    IdFrm: 'frm-@ViewBag.FormId',
+                    TitleModal: '@ViewData["Title"]',
+                    FixedColumn: 1,
+                    ReadAction: '@Url.Action("GetListFanPageConfigure", "FanPageConfigure")',
+                    AddAction: '@Url.Action("AddFanPageConfigure", "FanPageConfigure")',
+                    EditAction: '@Url.Action("EditFanPageConfigure", "FanPageConfigure")',
+                    DelAction: '@Url.Action("DelFanPageConfigure", "FanPageConfigure")',
+                    IsManage: true
+                },
+                [
+                    {
+                        data: "pageId", title: "Page Id",
+                        render: function (data) {
+                            return "<span class=\"d-inline-block text-truncate\" style=\"max-width: 200px;\">" + data + "</span>"
+                        }
+                    },
+                    {
+                        data: "pageTitle", title: "Page Title",
+                        render: function (data) {
+                            return "<span class=\"d-inline-block text-truncate\" style=\"max-width: 200px;\">" + data + "</span>"
+                        }
+                    },
+                     {
+                         data: "commentConfig", title: "Comment Config",
+                         render: function (data) {
+                            return "<span class=\"d-inline-block text-truncate\" style=\"max-width: 200px;\">" + data + "</span>"
+                        }
+                    },
+                    {
+                        data: "active", title: "Token",
+                        render: function (data) {
+                            return "<span class=\"d-inline-block text-truncate\" style=\"max-width: 200px;\">" + data + "</span>"
+                        }
+                    },
+                    {
+                        data: "dateModified", title: "Date Modified",
+                        render: function (data) {
+                            return moment(data).format("DD/MM/YYYY HH:mm:ss");
+                        }
+                    },
+                    getTemplateEditDel()
+                ]
+            );
+        })
+    </script>

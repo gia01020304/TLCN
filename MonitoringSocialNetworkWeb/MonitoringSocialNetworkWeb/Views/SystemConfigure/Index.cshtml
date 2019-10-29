@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Template = "Template/AddEditConfigure";
+    ViewBag.FormId = DateTime.Now.Ticks.ToString();
+    ViewBag.CallBack = "CallBackSaveConfig(resp);";
+    ViewBag.Url = Url.Action("SaveConfigure", "SystemConfigure");
+    ViewBag.Method = "Post";
+}
+<h3 class="mb-3">System Configure</h3>
+<partial name="_Form" />
+<script>
+    function CallBackSaveConfig(resp) {
+
+    }
+</script>
+
+
+
+

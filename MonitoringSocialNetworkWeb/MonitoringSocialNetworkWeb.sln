@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29326.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MonitoringSocialNetworkWeb", "MonitoringSocialNetworkWeb\MonitoringSocialNetworkWeb.csproj", "{98156ED5-4C18-45F1-A752-B88C68A6D285}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "..\IntegrateService\Core\Core.csproj", "{D9A29DE0-EDB4-4B66-9876-1BA4966CB4A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "..\IntegrateService\Business\Business.csproj", "{4740A9E4-8C4E-43C6-91AC-743021CC1576}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "..\IntegrateService\Repository\Repository.csproj", "{3E70862E-B291-4221-B3AE-8D6243DE7D8A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Main", "..\IntegrateService\Main\Main.csproj", "{78793429-D9D7-491C-B5D5-A14C44588B86}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommentAnalysis", "..\IntegrateService\CommentAnalysis\CommentAnalysis.csproj", "{D399D09B-A3E1-423B-BCFD-6C8404CBD6EA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{98156ED5-4C18-45F1-A752-B88C68A6D285}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98156ED5-4C18-45F1-A752-B88C68A6D285}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98156ED5-4C18-45F1-A752-B88C68A6D285}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98156ED5-4C18-45F1-A752-B88C68A6D285}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D9A29DE0-EDB4-4B66-9876-1BA4966CB4A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9A29DE0-EDB4-4B66-9876-1BA4966CB4A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9A29DE0-EDB4-4B66-9876-1BA4966CB4A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9A29DE0-EDB4-4B66-9876-1BA4966CB4A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4740A9E4-8C4E-43C6-91AC-743021CC1576}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4740A9E4-8C4E-43C6-91AC-743021CC1576}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4740A9E4-8C4E-43C6-91AC-743021CC1576}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4740A9E4-8C4E-43C6-91AC-743021CC1576}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E70862E-B291-4221-B3AE-8D6243DE7D8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E70862E-B291-4221-B3AE-8D6243DE7D8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E70862E-B291-4221-B3AE-8D6243DE7D8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E70862E-B291-4221-B3AE-8D6243DE7D8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78793429-D9D7-491C-B5D5-A14C44588B86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78793429-D9D7-491C-B5D5-A14C44588B86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78793429-D9D7-491C-B5D5-A14C44588B86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78793429-D9D7-491C-B5D5-A14C44588B86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D399D09B-A3E1-423B-BCFD-6C8404CBD6EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D399D09B-A3E1-423B-BCFD-6C8404CBD6EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D399D09B-A3E1-423B-BCFD-6C8404CBD6EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D399D09B-A3E1-423B-BCFD-6C8404CBD6EA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {50A0C2A0-DA5C-4E73-BE54-F5D4310EFDF7}
+	EndGlobalSection
+EndGlobal

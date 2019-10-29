@@ -1,0 +1,51 @@
+﻿@{
+    if (ViewBag.FormId != null)
+    {
+        <form class="pl-3 pr-3 form-horizontal"
+              id="frm-@ViewBag.FormId"
+              action="@ViewBag.Url"
+              method="@ViewBag.Method"
+              callback="@ViewBag.CallBack">
+            <partial name="@ViewBag.Template" />
+        </form>
+        <script>
+            createToolTip("#frm-@ViewBag.FormId");
+            $(document).ready(function () {
+                $("#frm-@ViewBag.FormId").submit(function (e) {
+                    e.preventDefault();
+                    if (!$(this).valid()) {
+                        return false;
+                    }
+                    var options = {
+                        type: $(this).attr("method"),
+                        async: false,
+                        cache: false,
+                        enctype: 'multipart/form-data',
+                        processData: false,
+                        contentType: "application/x-www-form-urlencoded",
+                        success: function (resp) {
+                            if (!resp.success) {
+                                toastDanger(resp.msg);
+                                return false;
+                            }
+                            toastSuccess(resp.msg);
+                            var tableId = '@ViewBag.TableId';
+
+                            @ViewBag.CallBack;
+                        },
+                        error: function (resp) {
+                            toastDanger("Server Error!</br>Please contact developer.")
+                        },
+                        complete: function () {
+
+                            hideSpinner();
+                        }
+                    };
+                    showSpinner();
+                    $(this).ajaxSubmit(options);
+                    return false;
+                })
+            })
+        </script>
+    }
+}

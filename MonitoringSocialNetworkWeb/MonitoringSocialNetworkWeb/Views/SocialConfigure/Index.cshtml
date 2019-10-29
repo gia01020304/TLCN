@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "Social Configure";
+    ViewBag.Template = "Template/AddEditSocialConfigure";
+    ViewBag.Url = Url.Action("AddSocialConfigure", "SocialConfigure");
+    ViewBag.Method = "Post";
+    ViewBag.FormId = "SocialConfigure";
+    ViewBag.TableId = "SocialConfigure";
+}
+<h3>@ViewData["Title"]</h3>
+<table id="tbl-@ViewBag.TableId" class="table table-striped dt-responsive nowrap tbl-crud">
+    <thead>
+        <tr>
+            <th class="all"></th>
+            <th class="all"></th>
+            <th class="all"></th>
+            <th class="all"></th>
+            <th class="all"></th>
+            <th class="all"></th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<partial name="_Modal">
+    <script>
+
+        $(document).ready(function () {
+            generateTable(
+                {
+                    IdTable: 'tbl-@ViewBag.TableId',
+                    IdFrm: 'frm-@ViewBag.FormId',
+                    TitleModal: '@ViewData["Title"]',
+                    FixedColumn: 1,
+                    ReadAction: '@Url.Action("GetListSocialConfigure", "SocialConfigure")',
+                    AddAction: '@Url.Action("AddSocialConfigure", "SocialConfigure")',
+                    EditAction: '@Url.Action("EditSocialConfigure", "SocialConfigure")',
+                    DelAction: '@Url.Action("DelSocialConfigure", "SocialConfigure")',
+                    IsManage: true
+                },
+                [
+                    {
+                        data: "appId", title: "App Id",
+                        render: function (data) {
+                            return "<span class=\"d-inline-block text-truncate\" style=\"max-width: 200px;\">" + data + "</span>"
+                        }
+                    },
+                    {
+                        data: "appSecret", title: "App Secrect",
+                        render: function (data) {
+                            return "<span class=\"d-inline-block text-truncate\" style=\"max-width: 200px;\">" + data + "</span>"
+                        }
+                    },
+                     {
+                         data: "appType", title: "App Type",
+                         render: function (data) {
+                             switch (data) {
+                                 case 0:
+                                     return "Facebook";
+                             }
+                        }
+                    },
+                    {
+                        data: "token", title: "Token",
+                        render: function (data) {
+                            return "<span class=\"d-inline-block text-truncate\" style=\"max-width: 200px;\">" + data + "</span>"
+                        }
+                    },
+
+                    {
+
+                        data: "dateModified", title: "Date Modified",
+                        render: function (data) {
+                            return moment(data).format("DD/MM/YYYY HH:mm:ss");
+                        }
+                    },
+                    getTemplateEditDel()
+                ]
+            );
+        })
+    </script>

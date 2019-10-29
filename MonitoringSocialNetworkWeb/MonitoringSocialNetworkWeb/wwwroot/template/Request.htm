@@ -1,0 +1,73 @@
+﻿<section class="ftco-section ftco-consult ftco-no-pt ftco-no-pb" style="background-image: url(images/no-image2.png);" data-stellar-background-ratio="0.5">
+    <div class="container">
+        <div class="row justify-content-end">
+            <div class="col-md-6 py-5 px-md-5 bg-primary">
+                <div class="heading-section heading-section-white ftco-animate mb-5">
+                    <h2 class="mb-4">Gửi Ý Kiến Đóng Góp</h2>
+                    <p id="msg"></p>
+                </div>
+                <form action="/OpinionParent/AddOpinionParent" method="post" class="appointment-form ftco-animate" id="frm-Request">
+                    <div class="row">
+
+                        <div class="col-12 col-lg-4">
+                            <img alt="Icon" class="img-fit" id="img-icon" src="/images/no-image.png" style="width:83%" />
+                        </div>
+                        <div class="col-12 col-lg-8">
+                            <div class="form-group">
+                                <label class="control-label" style="color:white;">Hình Ảnh</label>
+                                <div class="">
+                                    <input name="Image" accept="image/png,image/jpeg,image/jpg" type="file" class="form-control" style="height:46px" id="Image"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-md-flex">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Họ Tên" name="Name" required>
+                        </div>
+                    </div>
+                    <div class="d-md-flex">
+                        <div class="form-group">
+                            <input type="number" class="form-control" placeholder="Số Điện Thoại" name="PhoneNumber" required>
+                        </div>
+                        <div class="form-group ml-md-4">
+                            <input type="email" class="form-control" placeholder="Địa Chỉ Email" name="Email">
+                        </div>
+                    </div>
+                    <div class="d-md-flex">
+                        <div class="form-group">
+                            <textarea cols="30" rows="2" class="form-control" placeholder="Nội Dung" name="Description" required></textarea>
+                        </div>
+                        <div class="form-group ml-md-4">
+                            <input type="submit" value="Gửi" class="btn btn-secondary py-3 px-4">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script>
+    $(document).ready(function () {
+        $("#Image").change(function () {
+            setImage(this, $('#img-icon').get(0));
+        })
+        $('#frm-Request').submit(function (e) {
+            e.preventDefault();
+            var options = {
+                type: $(this).attr("method"),
+                async: false,
+                cache: false,
+                enctype: 'multipart/form-data',
+                processData: false,
+                contentType: "application/x-www-form-urlencoded",
+            };
+            $(this).ajaxSubmit(options);
+            $(this).trigger("reset");
+            alert("Cảm Ơn Bạn Đã Đóng Góp Ý Kiến.");
+            $('#img-icon').attr("src", "/images/no-image.png");
+            return false;
+        })
+
+    })
+</script>
