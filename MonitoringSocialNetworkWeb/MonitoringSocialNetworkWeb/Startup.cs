@@ -73,6 +73,7 @@ namespace MonitoringSocialNetworkWeb
             services.AddTransient<IFanpageConfigBusiness, FanpageConfigBusiness>();
             services.AddTransient<IFacebookBusiness, FacebookBusiness>();
             services.AddTransient<ISystemConfigureBusiness, SystemConfigureBusiness>();
+            services.AddTransient<IDatasetBusiness, DatasetBusiness>();
 
             services.AddScoped<UserManager<ApplicationUser>>();
 

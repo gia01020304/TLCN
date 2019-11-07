@@ -26,13 +26,20 @@ namespace MonitoringSocialNetworkWeb.Controllers
         private readonly ICommentBusiness commentBusiness;
         private readonly IFanpageConfigBusiness fanpageConfigBusiness;
         private readonly IFacebookBusiness facebookBusiness;
+        private readonly IDatasetBusiness datasetBusiness;
         #endregion
-        public FacebookController(ISocialConfigBusiness socialBusiness, ICommentBusiness commentBusiness, IFanpageConfigBusiness fanpageConfigBusiness, IFacebookBusiness facebookBusiness)
+        public FacebookController(ISocialConfigBusiness socialBusiness,
+                                  ICommentBusiness commentBusiness,
+                                  IFanpageConfigBusiness fanpageConfigBusiness,
+                                  IFacebookBusiness facebookBusiness,
+                                  IDatasetBusiness datasetBusiness
+                                )
         {
             this.socialBusiness = socialBusiness;
             this.commentBusiness = commentBusiness;
             this.fanpageConfigBusiness = fanpageConfigBusiness;
             this.facebookBusiness = facebookBusiness;
+            this.datasetBusiness = datasetBusiness;
         }
         /// <summary>
         /// Api for verify linked to the application
@@ -157,16 +164,24 @@ namespace MonitoringSocialNetworkWeb.Controllers
                         FromId = temp.value.from.id,
                         ParentId = temp.value.parent_id
                     };
-                    var commentOfUser = commentBusiness.GetCommentByCommentId(new CommentFilter()
+                    if (!string.IsNullOrEmpty(comment.Message))
                     {
-                        CommentId = comment.ParentId
-                    });
-                    if (commentOfUser != null && commentOfUser.IsTrain)
-                    {
-                        MLSimilarCommentAnalysis.Instance.AddNewData(commentOfUser.Message, comment.Message);
-                        MLSimilarCommentAnalysis.Instance.TrainDataSet();
+                        var commentOfUser = commentBusiness.GetCommentByCommentId(new CommentFilter()
+                        {
+                            CommentId = comment.ParentId
+                        });
+                        if (commentOfUser != null && commentOfUser.IsTrain)
+                        {
+                            this.datasetBusiness.AddDataset(new Dataset()
+                            {
+                                Comment = commentOfUser.Message,
+                                ReplyComment = comment.Message
+                            });
+                            MLSimilarCommentAnalysis.Instance.TrainDataSet();
+                        }
+                        commentBusiness.AddComment(comment);
                     }
-                    commentBusiness.AddComment(comment);
+                   
                 }
             }
             catch (Exception ex)

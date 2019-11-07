@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Formatters.Internal;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using MySql.Data.MySqlClient;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -18,6 +20,49 @@ namespace General
 {
     public static class CoreExtension
     {
+        public static void AddApplicationError(this HttpResponse resp, string message)
+        {
+            resp.Headers.Add("Application-Error", message);
+            resp.Headers.Add("Access-Control-Expose-Headers", "Application-Error");
+            resp.Headers.Add("Access-Control-Allow-Origin", "*");
+        }
+        public static async System.Threading.Tasks.Task<string> GenerateJwtTokenAsync(ApplicationUser model, UserManager<ApplicationUser> userManager, string secret)
+        {
+            var claim = new List<Claim>
+            {
+                new Claim("id",model.Id.ToString()),
+                new Claim("userName",model.UserName),
+                new Claim("imagePath",model.ImagePath??string.Empty)
+            };
+            var rolesOfUser = await userManager.GetRolesAsync(model);
+            foreach (var role in rolesOfUser)
+            {
+                claim.Add(new Claim(ClaimTypes.Role, role));
+            }
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claim),
+                Expires = DateTime.Now.AddDays(1),
+                SigningCredentials = creds
+            };
+
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+        //public static void AddPagination(this HttpResponse resp, int currentPage, int itemsPerPage, int totalItems, int totalPages)
+        //{
+        //    var pagination = new PaginationHeader(currentPage, itemsPerPage, totalItems, totalPages);
+        //    var calmelCaseFormatter = new JsonSerializerSettings();
+        //    calmelCaseFormatter.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
+        //    resp.Headers.Add("Pagination", JsonConvert.SerializeObject(pagination, calmelCaseFormatter));
+        //    resp.Headers.Add("Access-Control-Expose-Headers", "Pagination");
+
+        //}
         public static string CreateMessageLog(this object objectClass, string message)
         {
             var st = new StackTrace();
@@ -52,7 +97,7 @@ namespace General
             }
             return msg;
         }
-       
+
         public static T To<T>(this DataRow row)
         {
             var obj = (T)Activator.CreateInstance(typeof(T));
@@ -182,7 +227,7 @@ namespace General
                     using (var stream = new MemoryStream())
                     {
                         file.CopyTo(stream);
-                        return "data:image/jpeg;base64,"+Convert.ToBase64String(stream.ToArray());
+                        return "data:image/jpeg;base64," + Convert.ToBase64String(stream.ToArray());
                     }
                 }
             }

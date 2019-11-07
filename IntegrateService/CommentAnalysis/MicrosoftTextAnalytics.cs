@@ -53,7 +53,7 @@ namespace CommentAnalysis
                 model = new ResultAnalysis();
                 var level = await client.SentimentAsync(text);
                 var key = await client.KeyPhrasesAsync(text);
-                model.Score = (int)level.Score * 10;
+                model.Score = (int)(level.Score * 10);
                 model.Key = key.KeyPhrases;
             }
             catch (Exception ex)

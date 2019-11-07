@@ -7,6 +7,10 @@ namespace General
 {
     public class ApplicationUser : IdentityUser
     {
-        public ICollection<ApplicationUserRole> UserRoles { get; set; }
+        public bool IsActive { get; set; }
+        public string ImagePath { get; set; }
+        public DateTime? DateCreated { get; set; }
+        public DateTime? LastActive { get; set; }
+        public virtual ICollection<ApplicationUserRole> UserRoles { get; set; }
     }
 }

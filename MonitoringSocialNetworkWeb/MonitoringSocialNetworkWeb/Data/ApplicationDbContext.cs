@@ -12,7 +12,9 @@ namespace MonitoringSocialNetworkWeb.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            
         }
+        public DbSet<Dataset> Datasets { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

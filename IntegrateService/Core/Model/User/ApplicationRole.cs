@@ -14,6 +14,6 @@ namespace General
             this.Name = nameRole;
         }
 
-        public ICollection<ApplicationUserRole> UserRoles { get; set; }
+        public virtual ICollection<ApplicationUserRole> UserRoles { get; set; }
     }
 }
