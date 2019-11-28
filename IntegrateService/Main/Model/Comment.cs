@@ -14,6 +14,7 @@ namespace Main.Model
         public string Message { get; set; }
         public string Action { get; set; }
         public string ParentId { get; set; }
+        public string Link { get; set; }
         public string FromId { get; set; }
         public string CommentId { get; set; }
         public int? Score { get; set; }

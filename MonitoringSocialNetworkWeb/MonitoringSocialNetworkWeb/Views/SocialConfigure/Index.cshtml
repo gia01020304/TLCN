@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Social Configure";
+    ViewData["Title"] = "Social Configuration";
     ViewBag.Template = "Template/AddEditSocialConfigure";
     ViewBag.Url = Url.Action("AddSocialConfigure", "SocialConfigure");
     ViewBag.Method = "Post";
@@ -10,6 +10,7 @@
 <table id="tbl-@ViewBag.TableId" class="table table-striped dt-responsive nowrap tbl-crud">
     <thead>
         <tr>
+            <th class="all"></th>
             <th class="all"></th>
             <th class="all"></th>
             <th class="all"></th>
@@ -37,6 +38,12 @@
                     IsManage: true
                 },
                 [
+                    {
+                        data: "appName", title: "App Name",
+                        render: function (data) {
+                            return "<span class=\"d-inline-block text-truncate\" style=\"max-width: 200px;\">" + data + "</span>"
+                        }
+                    },
                     {
                         data: "appId", title: "App Id",
                         render: function (data) {
@@ -69,7 +76,7 @@
 
                         data: "dateModified", title: "Date Modified",
                         render: function (data) {
-                            return moment(data).format("DD/MM/YYYY HH:mm:ss");
+                            return moment(data).format("MM/DD/YYYY HH:mm:ss");
                         }
                     },
                     getTemplateEditDel()

@@ -49,7 +49,8 @@ namespace MonitoringSocialNetworkWeb.Realtime
                             var agent = userManager.FindByIdAsync(model.AgentId).Result;
                             if (agent != null)
                             {
-                                var rsSend = EmailExtension.Instance.SendEmailAsync(agent.Email, "Comment Invalid", model.Message).Result;
+                                var body = $"Comment:{model.Message}<br/>Link:<a href='{model.Link}' target='_blank'>Go to comment</a><br/>Date Received Comment: {model.DateReceived}<br/><br/>Date Send: {DateTime.Now}";
+                                var rsSend = EmailExtension.Instance.SendEmailAsync(agent.Email, "Social Care: Comment Negative", body).Result;
                                 if (rsSend)
                                 {
                                     model.DateSend = DateTime.Now;

@@ -9,4 +9,9 @@ namespace Main.Model.Facebook
         public string message { get; set; }
         public string access_token { get; set; }
     }
+    public class FBPostField
+    {
+        public string access_token { get; set; }
+        public string subscribed_fields { get; set; }
+    }
 }

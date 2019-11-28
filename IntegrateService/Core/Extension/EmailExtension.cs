@@ -11,7 +11,7 @@ namespace General.Extension
 {
     public class EmailExtension
     {
-        private readonly EmailSettings emailSettings;
+
         private static EmailExtension instance;
         private static object mlock = new object();
 
@@ -30,41 +30,60 @@ namespace General.Extension
         }
         public EmailExtension()
         {
-            emailSettings = new EmailSettings();
 
-            emailSettings.SMTPSenderName = SqlDAL.Instance.GetSetting("SMTPSenderName").Value;
-            emailSettings.SMTPSender = SqlDAL.Instance.GetSetting("SMTPSender").Value;
-            emailSettings.SMTPPassword = SqlDAL.Instance.GetSetting("SMTPPassword").Value;
-            emailSettings.SMTPMailServer = SqlDAL.Instance.GetSetting("MailServer").Value;
+        }
+        private EmailSettings GetEmailSetting()
+        {
+            EmailSettings emailSettings = null;
+            try
+            {
+                emailSettings = new EmailSettings();
+
+                emailSettings.SMTPSenderName = SqlDAL.Instance.GetSetting("SMTPSenderName").Value;
+                emailSettings.SMTPSender = SqlDAL.Instance.GetSetting("SMTPSender").Value;
+                emailSettings.SMTPPassword = SqlDAL.Instance.GetSetting("SMTPPassword").Value;
+                emailSettings.SMTPMailPort = int.Parse(SqlDAL.Instance.GetSetting("SMTPPort").Value);
+                emailSettings.SMTPMailServer = SqlDAL.Instance.GetSetting("MailServer").Value;
+            }
+            catch (Exception ex)
+            {
+
+                CoreLogger.Instance.Error(this.CreateMessageLog(ex.Message));
+            }
+            return emailSettings;
         }
         public async Task<bool> SendEmailAsync(string email, string subject, string message)
         {
             bool rsBool = false;
             try
             {
-                var mimeMessage = new MimeMessage();
-                mimeMessage.From.Add(new MailboxAddress(emailSettings.SMTPSenderName, emailSettings.SMTPSender));
-
-                mimeMessage.To.Add(new MailboxAddress(email));
-
-                mimeMessage.Subject = subject;
-
-                mimeMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+                var emailSettings = GetEmailSetting();
+                if (emailSettings!=null)
                 {
-                    Text = message
-                };
-                using (var client = new SmtpClient())
-                {
-                    client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+                    var mimeMessage = new MimeMessage();
+                    mimeMessage.From.Add(new MailboxAddress(emailSettings.SMTPSenderName, emailSettings.SMTPSender));
 
-                    await client.ConnectAsync(emailSettings.SMTPMailServer, emailSettings.SMTPMailPort, SecureSocketOptions.StartTls);
-                    await client.AuthenticateAsync(emailSettings.SMTPSender, emailSettings.SMTPPassword);
+                    mimeMessage.To.Add(new MailboxAddress(email));
 
-                    await client.SendAsync(mimeMessage);
+                    mimeMessage.Subject = subject;
 
-                    await client.DisconnectAsync(true);
+                    mimeMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html)
+                    {
+                        Text = message
+                    };
+                    using (var client = new SmtpClient())
+                    {
+                        client.ServerCertificateValidationCallback = (s, c, h, e) => true;
+
+                        await client.ConnectAsync(emailSettings.SMTPMailServer, emailSettings.SMTPMailPort, SecureSocketOptions.StartTls);
+                        await client.AuthenticateAsync(emailSettings.SMTPSender, emailSettings.SMTPPassword);
+
+                        await client.SendAsync(mimeMessage);
+
+                        await client.DisconnectAsync(true);
+                    }
+                    rsBool = true;
                 }
-                rsBool = true;
             }
             catch (Exception ex)
             {

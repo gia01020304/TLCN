@@ -51,12 +51,21 @@ namespace Repository
                 new SqlParameter("@FromId",model.FromId),
                 new SqlParameter("@CommentId",model.CommentId),
                 new SqlParameter("@Score",model.Score),
+                new SqlParameter("@Link",model.Link),
                 new SqlParameter("@AgentId",model.AgentId),
                 new SqlParameter("@Lock",model.Lock),
                 new SqlParameter("@IsTrain",model.IsTrain),
                 new SqlParameter("@IsNegative",model.IsNegative),
             };
             return ExecuteNonQuery("usp_AddComment", parameter);
+        }
+        public DataTable GetPostInfo(PostInfoFilter filter)
+        {
+            IDataParameter[] parameter = new SqlParameter[]
+           {
+                new SqlParameter("@PageId",filter.PageId),
+           };
+            return ExecuteQuery("usp_GetPostInfo", parameter);
         }
 
         public DataTable GetCommentByCommentId(CommentFilter commentFilter)

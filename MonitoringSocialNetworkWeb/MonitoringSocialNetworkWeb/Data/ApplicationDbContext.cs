@@ -1,7 +1,9 @@
 ﻿using General;
+using Main.Model;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 namespace MonitoringSocialNetworkWeb.Data
 {
@@ -12,14 +14,15 @@ namespace MonitoringSocialNetworkWeb.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
-            
+
         }
-        public DbSet<Dataset> Datasets { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
-
+            builder.Entity<ApplicationUser>()
+               .Property(b => b.IsActive)
+               .HasDefaultValue(true);
             builder.Entity<ApplicationUserRole>(userRole =>
             {
                 userRole.HasKey(ur => new { ur.UserId, ur.RoleId });

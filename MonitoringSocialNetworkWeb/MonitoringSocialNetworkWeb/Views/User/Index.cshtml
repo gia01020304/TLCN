@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Agent";
+    ViewBag.Template = "Template/AddEditUser";
+    ViewBag.Url = Url.Action("AddUser", "User");
+    ViewBag.Method = "Post";
+    ViewBag.FormId = "User";
+    ViewBag.TableId = "User";
+}
+<h3>@ViewData["Title"]</h3>
+<table id="tbl-@ViewBag.TableId" class="table table-striped dt-responsive nowrap tbl-crud">
+    <thead>
+        <tr>
+            <th class="all"></th>
+            <th class="all"></th>
+            <th class="all"></th>
+            <th class="all"></th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+<partial name="_Modal">
+    <script>
+
+        $(document).ready(function () {
+            generateTable(
+                {
+                    IdTable: 'tbl-@ViewBag.TableId',
+                    IdFrm: 'frm-@ViewBag.FormId',
+                    TitleModal: '@ViewData["Title"]',
+                    FixedColumn: 1,
+                    ReadAction: '@Url.Action("GetUser", "User")',
+                    AddAction: '@Url.Action("AddUser", "User")',
+                    EditAction: '@Url.Action("EditUser", "User")',
+                    DelAction: '@Url.Action("DelUser", "User")',
+                    IsManage: true
+                },
+                [
+                    {
+                        data: "userName", title: "User Name",
+                        render: function (data) {
+                            return "<span class=\"d-inline-block text-truncate\" style=\"max-width: 200px;\">" + data + "</span>"
+                        }
+                    },
+                     {
+                        data: "phoneNumber", title: "Phone Number",
+                        render: function (data) {
+                            return "<span class=\"d-inline-block text-truncate\" style=\"max-width: 200px;\">" + data + "</span>"
+                        }
+                    },
+                    {
+                        data: "email", title: "Email",
+                        render: function (data) {
+                            return "<span class=\"d-inline-block text-truncate\" style=\"max-width: 200px;\">" + data + "</span>"
+                        }
+                    },
+                    getTemplateEditDel()
+                ]
+            );
+        })
+    </script>

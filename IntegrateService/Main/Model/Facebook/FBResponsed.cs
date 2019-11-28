@@ -7,5 +7,6 @@ namespace Main.Model.Facebook
     public class FBResponsed
     {
         public string id { get; set; }
+        public bool success { get; set; }
     }
 }

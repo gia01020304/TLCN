@@ -36,5 +36,6 @@ namespace Main
         /// <param name="commentId"></param>
         /// <returns></returns>
         Comment GetCommentByCommentId(CommentFilter commentFilter);
+        List<PostInfo> GetPostInfo(PostInfoFilter filter);
     }
 }

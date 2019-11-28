@@ -4,6 +4,7 @@
         .build();
     connection.start().catch(err => console.error(err.toString()));
     connection.on("SendMessage", callBack);
+    return connection;
 }
 function showRemoveImage(element) {
     var src = $(element).attr("src");
@@ -378,18 +379,14 @@ function addEditModel(iDTable, iDFrm, title, url, model, iDRow) {
             var e = $('[name=' + capitalizeFirstLetter(propertyName) + ']');
             if ($(e).length > 0) {
                 if (typeof $(e).attr("data-allowInput") === 'undefined') {
-                    if ($(e).attr("hasImg") === 'true') {
-                        $("#img-" + propertyName.toLowerCase() + "-" + iDFrm).prop("src", model[propertyName]);
-                    } else {
-                        var value = model[propertyName];
-                        if (typeof value !== "undefined" && value !== null) {
-                            value = $('<textarea />').html(model[propertyName].toString()).text();
-                        }
-                        $(e).val(value);
-
-                        if (typeof $(e).attr("data-isSelect2") !== "undefined") {
-                            $(e).attr("data-isSelect2", iDRow);
-                        }
+                    var value = model[propertyName];
+                    if (typeof value !== "undefined" && value !== null) {
+                        value = $('<textarea />').html(model[propertyName].toString()).text();
+                    }
+                    $(e).val(value);
+                    if ((typeof $(e).attr("data-extend") !== "undefined")) {
+                        
+                        $(e).data("extend", value);
                     }
                 }
             }

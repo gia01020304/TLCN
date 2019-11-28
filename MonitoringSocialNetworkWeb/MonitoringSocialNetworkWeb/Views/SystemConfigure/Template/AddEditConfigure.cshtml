@@ -1,14 +1,32 @@
 ﻿<ul class="nav nav-tabs mb-3">
     <li class="nav-item">
-        <a href="#tab-basicInfo" data-toggle="tab" aria-expanded="true" class="nav-link active" id="btn-tab-basicInfo">
+        <a href="#tab-facebook" data-toggle="tab" aria-expanded="true" class="nav-link active" id="btn-tab-facebook">
             <i class="mdi mdi-home-variant d-lg-none d-block mr-1"></i>
-            <span class="d-none d-lg-block">General</span>
+            <span class="d-none d-lg-block">Facebook</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="#tab-microsoft" data-toggle="tab" aria-expanded="false" class="nav-link" id="btn-tab-microsoft">
+            <i class="mdi mdi-home-variant d-lg-none d-block mr-1"></i>
+            <span class="d-none d-lg-block">Microsoft</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a href="#tab-smtp" data-toggle="tab" aria-expanded="false" class="nav-link" id="btn-tab-smtp">
+            <i class="mdi mdi-home-variant d-lg-none d-block mr-1"></i>
+            <span class="d-none d-lg-block">SMTP</span>
         </a>
     </li>
 </ul>
 <div class="tab-content">
-    <div class="tab-pane show active mt-4" id="tab-basicInfo">
-        <partial name="Template/General" />
+    <div class="tab-pane show active mt-4" id="tab-facebook">
+        <partial name="Template/Facebook" />
+    </div>
+    <div class="tab-pane  mt-4" id="tab-microsoft">
+        <partial name="Template/Microsoft" />
+    </div>
+    <div class="tab-pane mt-4" id="tab-smtp">
+        <partial name="Template/SMTP" />
     </div>
 </div>
 <div class="col-12 col-lg-8">

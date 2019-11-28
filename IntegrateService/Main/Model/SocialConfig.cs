@@ -16,12 +16,13 @@ namespace Main.Model
         [Required]
         [Display(Name = "App Secret")]
         public string AppSecret { get; set; }
-        [Required]
         [Display(Name = "Token")]
         public string Token { get; set; }
         [Required]
         [Display(Name = "App Type")]
         public AppType AppType { get; set; }
+        [Display(Name = "App Name")]
+        public string AppName { get; set; }
         public bool Deleted { get; set; }
         public DateTime? DateModified { get; set; }
     }

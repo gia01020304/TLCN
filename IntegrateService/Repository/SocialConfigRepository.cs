@@ -13,6 +13,7 @@ namespace Repository
                 new SqlParameter("@AppType",model.AppType),
                 new SqlParameter("@AppSecret",model.AppSecret),
                 new SqlParameter("@AppId",model.AppId),
+                new SqlParameter("@AppName",model.AppName),
                 new SqlParameter("@Token",model.Token),
                 new SqlParameter("@Id",model.Id),
                 new SqlParameter("@Deleted",model.Deleted)

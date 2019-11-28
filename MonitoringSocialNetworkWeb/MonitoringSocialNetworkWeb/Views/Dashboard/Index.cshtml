@@ -1,0 +1,31 @@
+﻿@model SystemConfigure
+<div class="row">
+    <div class="col-8">
+        <h4>Machine Infomation</h4>
+        <div class="row">
+            <label asp-for="@Model.MicroAccuracy" class="control-label col-5">Micro Accuracy (@Model.MicroAccuracy%)</label>
+            <div class="progress mb-2 col-7 unset-padding">
+                <div class="progress-bar @(CoreExtension.CalculatePercent(Model.MicroAccuracy))" role="progressbar" style="width: @Model.MicroAccuracy%" aria-valuenow="@Model.MicroAccuracy" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+
+        </div>
+        <div class="row">
+            <label asp-for="@Model.MacroAccuracy" class="control-label col-5">Macro Accuracy (@Model.MacroAccuracy%)</label>
+            <div class="progress mb-2 col-7 unset-padding">
+                <div class="progress-bar @(CoreExtension.CalculatePercent(Model.MacroAccuracy))" role="progressbar" style="width: @Model.MacroAccuracy%" aria-valuenow="@Model.MacroAccuracy" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        <div class="row">
+            <label asp-for="@Model.LogLoss" class="control-label col-5">Log Loss (@Model.LogLoss%)</label>
+            <div class="progress mb-2 col-7 unset-padding">
+                <div class="progress-bar @(CoreExtension.CalculatePercent(Model.LogLoss))" role="progressbar" style="width: @Model.LogLoss%" aria-valuenow="@Model.LogLoss" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+        <div class="row">
+            <label asp-for="@Model.LogLossReduction" class="control-label col-5">Log Loss Reduction (@Model.LogLossReduction%)</label>
+            <div class="progress mb-2 col-7 unset-padding">
+                <div class="progress-bar @(CoreExtension.CalculatePercent(Model.LogLossReduction))" role="progressbar" style="width: @Model.LogLossReduction%" aria-valuenow="@Model.LogLossReduction" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+</div>

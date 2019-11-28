@@ -1,0 +1,45 @@
+﻿@model SystemConfigure
+<div class="col-12 col-lg-8">
+    <div class="form-group">
+        <label asp-for="SMTPSenderName" class="control-label"></label>
+        <div class="">
+            <input asp-for="SMTPSenderName" class="form-control" />
+            <span asp-validation-for="SMTPSenderName" class="unactive"></span>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="SMTPSender" class="control-label"></label>
+        <div class="">
+            <input asp-for="SMTPSender" class="form-control" />
+            <span asp-validation-for="SMTPSender" class="unactive"></span>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="SMTPPassword" class="control-label"></label>
+        <div class="">
+            @Html.PasswordFor(x => x.SMTPPassword, new { @class = "form-control", @value = Model.SMTPPassword })
+            <span asp-validation-for="SMTPPassword" class="unactive"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="MailServer" class="control-label"></label>
+        <div class="">
+            <input asp-for="MailServer" class="form-control" />
+            <span asp-validation-for="MailServer" class="unactive"></span>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label asp-for="SMTPPort" class="control-label"></label>
+        <div class="">
+            <input asp-for="SMTPPort" class="form-control" />
+            <span asp-validation-for="SMTPPort" class="unactive"></span>
+
+        </div>
+    </div>
+</div>
+<script>
+
+</script>

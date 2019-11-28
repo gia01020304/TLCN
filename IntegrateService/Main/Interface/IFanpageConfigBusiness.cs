@@ -19,5 +19,18 @@ namespace Main
         /// <param name="filter"></param>
         /// <returns></returns>
         List<FanpageConfig> GetListFanPageConfigure(FanpageConfigFilter filter);
+
+        /// <summary>
+        /// Add fanpage configure
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        bool AddFanPageConfigure(FanpageConfig model);
+
+        bool EditFanPageConfigure(FanpageConfig model);
+
+        bool DelFanPageConfigure(FanpageConfig model);
+
+        bool DelFanpageOfAgent(FanpageConfigFilter filter);
     }
 }

@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.AspNetCore.HttpOverrides;
 using System.Net;
 using Main.Interface;
+using CommentAnalysis;
 
 namespace MonitoringSocialNetworkWeb
 {
@@ -73,16 +74,13 @@ namespace MonitoringSocialNetworkWeb
             services.AddTransient<IFanpageConfigBusiness, FanpageConfigBusiness>();
             services.AddTransient<IFacebookBusiness, FacebookBusiness>();
             services.AddTransient<ISystemConfigureBusiness, SystemConfigureBusiness>();
-            services.AddTransient<IDatasetBusiness, DatasetBusiness>();
-
             services.AddScoped<UserManager<ApplicationUser>>();
-
-
-
             services.AddHostedService<BackgroundSendMail>();
+            services.AddHostedService<BackgroundTrainModel>();
             #endregion
-
+            //MLSimilarCommentAnalysis.Instance.TrainDataSet();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -104,12 +102,12 @@ namespace MonitoringSocialNetworkWeb
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseForwardedHeaders(new ForwardedHeadersOptions
-            {
-                ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
-            });
 
             app.UseAuthentication();
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<CallBackPageAccessHub>("/callBackPageAccessHub");
+            });
 
             app.UseMvc(routes =>
             {
@@ -133,15 +131,20 @@ namespace MonitoringSocialNetworkWeb
                     {
                         roleManager.CreateAsync(new ApplicationRole() { Name = "Admin" }).Wait();
                     }
-                    string email = Configuration.GetSection("User").GetSection("Email").Value;
-                    var testUser = userManager.FindByEmailAsync(email).Result;
+                    var hasRoleAgent = roleManager.RoleExistsAsync("Agent").Result;
+                    if (!hasRoleAgent)
+                    {
+                        roleManager.CreateAsync(new ApplicationRole() { Name = "Agent" }).Wait();
+                    }
+                    string email = Configuration.GetSection("User").GetSection("UserName").Value;
+                    var testUser = userManager.FindByNameAsync(email).Result;
                     if (testUser == null)
                     {
                         ApplicationUser administrator = new ApplicationUser();
-                        administrator.Email = email;
+                        administrator.Email = Configuration.GetSection("User").GetSection("Email").Value;
                         administrator.UserName = email;
                         administrator.PhoneNumber = Configuration.GetSection("User").GetSection("PhoneNumber").Value;
-
+                        //administrator.IsActive = true;
                         var newUser = userManager.CreateAsync(administrator, administrator.PhoneNumber).Result;
                         if (newUser.Succeeded)
                         {

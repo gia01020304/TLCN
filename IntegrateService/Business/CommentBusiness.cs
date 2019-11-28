@@ -61,6 +61,20 @@ namespace Business
             return models;
         }
 
+        public List<PostInfo> GetPostInfo(PostInfoFilter filter)
+        {
+            List<PostInfo> models = null;
+            try
+            {
+                models = repository.GetPostInfo(filter).To<PostInfo>();
+            }
+            catch (Exception ex)
+            {
+                CoreLogger.Instance.Error(this.CreateMessageLog(ex.Message));
+            }
+            return models;
+        }
+
         public bool UpdateComment(Comment model)
         {
             bool rs = false;

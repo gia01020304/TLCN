@@ -13,12 +13,6 @@
             <div class=" dropdown-header noti-title">
                 <h6 class="text-overflow m-0">Welcome !</h6>
             </div>
-            <form asp-area="Identity" asp-page="/Account/ResetPassword" method="get" asp-route-returnUrl="@Url.Page("/Account/ResetPassword", new { area = "Identity" })" id="frm-change-password">
-                <a href="javascript:void(0);" class="dropdown-item notify-item" id="change-password">
-                    <i class="mdi mdi-key-change"></i>
-                    <span>Change Password</span>
-                </a>
-            </form>
             <form asp-area="Identity" asp-page="/Account/Logout" method="post" asp-route-returnUrl="@Url.Page("/Account/Login", new { area = "Identity" })" id="frm-Logout">
                 <a href="javascript:void(0);" class="dropdown-item notify-item" id="logout">
                     <i class="mdi mdi-lAogout"></i>

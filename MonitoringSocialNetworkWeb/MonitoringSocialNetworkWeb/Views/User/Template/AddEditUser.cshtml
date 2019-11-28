@@ -1,0 +1,29 @@
+﻿@model RegisterModel
+<div class="col-12 mt-1">
+    <input asp-for="Id" class="unactive">
+    <div class="form-group row">
+        <label asp-for="UserName"></label>
+        <input asp-for="UserName" class="form-control mr-1" />
+        <span asp-validation-for="UserName" class="unactive"></span>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control mr-1" />
+        <span asp-validation-for="Email" class="unactive"></span>
+    </div>
+    <div class="form-group row">
+        <label asp-for="PhoneNumber"></label>
+        <input asp-for="PhoneNumber" class="form-control mr-1" />
+        <span asp-validation-for="PhoneNumber" class="unactive"></span>
+    </div>
+    <div class="form-group row ">
+        <label asp-for="Password"></label>
+        <input asp-for="Password" type="password" class="form-control mr-1" />
+        <span asp-validation-for="Password" class="unactive"></span>
+    </div>
+    <div class="form-group row ">
+        <label asp-for="ConfirmPassword"></label>
+        <input asp-for="ConfirmPassword" type="password" class="form-control mr-1" />
+        <span asp-validation-for="ConfirmPassword" class="unactive"></span>
+    </div>
+</div>

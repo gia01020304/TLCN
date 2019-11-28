@@ -9,5 +9,7 @@ namespace CommentAnalysis
     {
         [ColumnName("PredictedLabel")]
         public string ReplyComment;
+        [ColumnName("Score")]
+        public float[] Score;
     }
 }

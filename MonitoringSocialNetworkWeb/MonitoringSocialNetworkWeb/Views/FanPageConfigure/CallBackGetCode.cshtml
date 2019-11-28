@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "_LayoutEmpty";
+}
+<script>
+    var s = window.location.hash;
+
+    var o = {};
+
+    $.each(s.substr(1).split('&'), function (i, elem) {
+        var parts = elem.split('=');
+        o[parts[0]] = parts[1];
+    });
+    $.ajax({
+        url: '@Url.Action("ProccessCallBack","FanpageConfigure")',
+        data: o
+    }).then(function () {
+        window.close();
+    });
+</script>

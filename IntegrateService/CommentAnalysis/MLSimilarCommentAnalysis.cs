@@ -5,6 +5,7 @@ using Microsoft.ML.Data;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Linq;
 using System.Text;
 
 namespace CommentAnalysis
@@ -46,10 +47,12 @@ namespace CommentAnalysis
                         Comment = message
                     };
                     var prediction = predEngine.Predict(replyComment);
-                    if (predEngine != null)
+                    var maxPercent = prediction.Score.Max();
+                    if (maxPercent >= 0.9)
                     {
                         reply = prediction.ReplyComment;
                     }
+
                 }
             }
             catch (Exception ex)
@@ -84,19 +87,35 @@ namespace CommentAnalysis
         }
         private IDataView LoadData()
         {
-            DatabaseLoader loader = mlContext.Data.CreateDatabaseLoader<Dataset>();
-            DatabaseSource dbSource = new DatabaseSource(SqlClientFactory.Instance, Configuration.ConnectString, @"SELECT Comment,ReplyComment FROM  dbo.Dataset");
-            //DatabaseSource dbSource = new DatabaseSource(SqlClientFactory.Instance, "Data Source=(local);Initial Catalog=MonitoringSocialNetwork;Integrated Security=True", @"SELECT Comment,ReplyComment FROM  dbo.Dataset");
+            DatabaseLoader loader = mlContext.Data.CreateDatabaseLoader<Data>();
+            DatabaseSource dbSource = new DatabaseSource(SqlClientFactory.Instance, Configuration.ConnectString, @"SELECT Comment,ReplyComment FROM  Datasets");
+            //DatabaseSource dbSource = new DatabaseSource(SqlClientFactory.Instance, "Data Source=(local);Initial Catalog=MonitoringSocialNetwork;Integrated Security=True", @"SELECT Comment,ReplyComment FROM  dbo.Datasets");
             return loader.Load(dbSource);
         }
         private void Evaluate(DataViewSchema trainingDataViewSchema)
         {
             var testDataView = LoadData();
             var testMetrics = mlContext.MulticlassClassification.Evaluate(trainedModel.Transform(testDataView));
-            CoreLogger.Instance.Debug($"*       MicroAccuracy:    {testMetrics.MicroAccuracy:0.###}");
-            CoreLogger.Instance.Debug($"*       MacroAccuracy:    {testMetrics.MacroAccuracy:0.###}");
-            CoreLogger.Instance.Debug($"*       LogLoss:          {testMetrics.LogLoss:#.###}");
-            CoreLogger.Instance.Debug($"*       LogLossReduction: {testMetrics.LogLossReduction:#.###}");
+            SqlDAL.Instance.SaveSettingModel(new SettingModel()
+            {
+                Key = "MicroAccuracy",
+                Value = $"{(int)(testMetrics.MicroAccuracy * 100)}"
+            });
+            SqlDAL.Instance.SaveSettingModel(new SettingModel()
+            {
+                Key = "MacroAccuracy",
+                Value = $"{(int)(testMetrics.MacroAccuracy * 100)}"
+            });
+            SqlDAL.Instance.SaveSettingModel(new SettingModel()
+            {
+                Key = "LogLoss",
+                Value = $"{(int)(testMetrics.LogLoss * 100)}"
+            });
+            SqlDAL.Instance.SaveSettingModel(new SettingModel()
+            {
+                Key = "LogLossReduction",
+                Value = $"{(int)(testMetrics.LogLossReduction * 100)}"
+            });
         }
         private IEstimator<ITransformer> BuildAndTrainModel(IDataView trainingDataView, IEstimator<ITransformer> pipeline)
         {
@@ -107,6 +126,7 @@ namespace CommentAnalysis
               .Append(mlContext.Transforms.Conversion.MapKeyToValue("PredictedLabel"));
                 trainedModel = trainingPipeline.Fit(trainingDataView);
                 predEngine = mlContext.Model.CreatePredictionEngine<Data, Prediction>(trainedModel);
+
                 //Data dt = new Data()
                 //{
                 //    Question = "Hello",

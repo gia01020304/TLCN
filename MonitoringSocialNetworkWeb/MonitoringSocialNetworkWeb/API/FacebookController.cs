@@ -12,6 +12,8 @@ using Main.Model.Facebook;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MonitoringSocialNetworkWeb.Data;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -26,20 +28,20 @@ namespace MonitoringSocialNetworkWeb.Controllers
         private readonly ICommentBusiness commentBusiness;
         private readonly IFanpageConfigBusiness fanpageConfigBusiness;
         private readonly IFacebookBusiness facebookBusiness;
-        private readonly IDatasetBusiness datasetBusiness;
+        private readonly ApplicationDbContext dbContext;
         #endregion
         public FacebookController(ISocialConfigBusiness socialBusiness,
                                   ICommentBusiness commentBusiness,
                                   IFanpageConfigBusiness fanpageConfigBusiness,
                                   IFacebookBusiness facebookBusiness,
-                                  IDatasetBusiness datasetBusiness
+                                  ApplicationDbContext dbContext
                                 )
         {
             this.socialBusiness = socialBusiness;
             this.commentBusiness = commentBusiness;
             this.fanpageConfigBusiness = fanpageConfigBusiness;
             this.facebookBusiness = facebookBusiness;
-            this.datasetBusiness = datasetBusiness;
+            this.dbContext = dbContext;
         }
         /// <summary>
         /// Api for verify linked to the application
@@ -107,6 +109,12 @@ namespace MonitoringSocialNetworkWeb.Controllers
                         FromId = temp.value.from.id,
                         ParentId = temp.value.parent_id
                     };
+                    var commentDuplicate = commentBusiness.GetCommentByCommentId(new CommentFilter() { CommentId = comment.CommentId });
+                    if (commentDuplicate != null)
+                    {
+                        return;
+                    }
+
                     var fanpageConfig = fanpageConfigBusiness.GetFanpageConfig(new FanpageConfigFilter()
                     {
                         PageId = comment.PageId
@@ -120,15 +128,20 @@ namespace MonitoringSocialNetworkWeb.Controllers
                     {
                         comment.Score = rsAnalysis.Score;
                     }
-                    var replyComment = MLSimilarCommentAnalysis.Instance.GetReplyComment(comment.Message);
+                    comment.IsNegative = fanpageConfig.IsNegative(comment.Score.Value, "negative");
+                    var replyComment = string.Empty;
+                    if (!comment.IsNegative)
+                    {
+                        replyComment = MLSimilarCommentAnalysis.Instance.GetReplyComment(comment.Message);
+                    }
                     if (string.IsNullOrEmpty(replyComment))
                     {
                         replyComment = fanpageConfig.GetCommentConfig(comment.Score.Value);
                         comment.IsTrain = true;
                     }
-
+                    var tempCommentId = comment.CommentId.Split("_");
+                    comment.Link = model.entry[0].changes[0].value.post.permalink_url + "&comment_id=" + tempCommentId[1];
                     comment.AgentId = fanpageConfig.AgentId;
-                    comment.IsNegative = fanpageConfig.IsNegative(comment.Score.Value, "negative");
                     commentBusiness.AddComment(comment);
                     if (socialConfigByPageId != null)
                     {
@@ -172,16 +185,21 @@ namespace MonitoringSocialNetworkWeb.Controllers
                         });
                         if (commentOfUser != null && commentOfUser.IsTrain)
                         {
-                            this.datasetBusiness.AddDataset(new Dataset()
+                            //this.dbContext.Datasets.Add(new Dataset()
+                            //{
+                            //    Comment = commentOfUser.Message,
+                            //    ReplyComment = comment.Message
+                            //});
+                            //this.dbContext.SaveChangesAsync().Wait();
+                            SqlDAL.Instance.SaveSettingModel(new SettingModel()
                             {
-                                Comment = commentOfUser.Message,
-                                ReplyComment = comment.Message
+                                Key = "IsTrain",
+                                Value = "true"
                             });
-                            MLSimilarCommentAnalysis.Instance.TrainDataSet();
                         }
                         commentBusiness.AddComment(comment);
                     }
-                   
+
                 }
             }
             catch (Exception ex)
@@ -189,5 +207,6 @@ namespace MonitoringSocialNetworkWeb.Controllers
                 CoreLogger.Instance.Error(this.CreateMessageLog(ex.Message));
             }
         }
+
     }
 }

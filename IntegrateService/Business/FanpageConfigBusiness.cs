@@ -16,6 +16,82 @@ namespace Business
         {
             repository = new FanpageConfigRepository();
         }
+
+        public bool AddFanPageConfigure(FanpageConfig model)
+        {
+            bool rsBool = false;
+            try
+            {
+                model.Active = true;
+                
+                if (repository.SaveFanPageConfigure(model) > 0)
+                {
+                    rsBool = true;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                CoreLogger.Instance.Error(this.CreateMessageLog(ex.Message));
+            }
+            return rsBool;
+        }
+
+        public bool DelFanPageConfigure(FanpageConfig model)
+        {
+            bool rsBool = false;
+            try
+            {
+                model.Deleted = true;
+                if (repository.SaveFanPageConfigure(model) > 0)
+                {
+                    rsBool = true;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                CoreLogger.Instance.Error(this.CreateMessageLog(ex.Message));
+            }
+            return rsBool;
+        }
+
+        public bool DelFanpageOfAgent(FanpageConfigFilter filter)
+        {
+            bool rsBool = false;
+            try
+            {
+                if (repository.DeleteFanPageOfAgent(filter) > 0)
+                {
+                    rsBool = true;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                CoreLogger.Instance.Error(this.CreateMessageLog(ex.Message));
+            }
+            return rsBool;
+        }
+
+        public bool EditFanPageConfigure(FanpageConfig model)
+        {
+            bool rsBool = false;
+            try
+            {
+                if (repository.SaveFanPageConfigure(model) > 0)
+                {
+                    rsBool = true;
+                }
+            }
+            catch (Exception ex)
+            {
+
+                CoreLogger.Instance.Error(this.CreateMessageLog(ex.Message));
+            }
+            return rsBool;
+        }
+
         public FanpageConfig GetFanpageConfig(FanpageConfigFilter filter)
         {
             FanpageConfig model = null;

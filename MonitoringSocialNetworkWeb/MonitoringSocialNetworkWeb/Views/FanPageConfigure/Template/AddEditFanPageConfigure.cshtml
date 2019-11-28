@@ -1,5 +1,349 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model FanpageConfig
+<div class="col-12 mt-1">
+    <div id="wrap-page-accessToken">
+        <div class="form-group">
+            <label asp-for="SocialConfigId"></label>
+            <div class="unset-padding">
+                <select class="form-control js-states" asp-for="SocialConfigId" data-extend="empty"></select>
+            </div>
+            <span asp-validation-for="SocialConfigId" class="unactive"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="PageAccessToken"></label>
+            <div class="row">
+                <div class="col-8">
+                    <input asp-for="PageAccessToken" class="form-control mr-1" readonly />
+                    <span asp-validation-for="PageAccessToken" class="unactive"></span>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-success" id="btnGetPageAccess" type="button">Get Page Access Token</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary float-right mb-2" disabled id="btnNext" type="button">Next</button>
+    <div id="wrap-page-config" class="unactive">
+        <input asp-for="Id" class="unactive">
+        <input asp-for="Active" class="unactive">
+        <div class="form-group">
+            <label asp-for="PageTitle"></label>
+            <input asp-for="PageTitle" class="form-control mr-1" readonly />
+            <span asp-validation-for="PageTitle" class="unactive"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="PageId"></label>
+            <input asp-for="PageId" class="form-control mr-1" readonly />
+            <span asp-validation-for="PageId" class="unactive"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="AgentId"></label>
+            <div class="unset-padding">
+                <select class="form-control js-states" asp-for="AgentId" data-extend="empty"></select>
+            </div>
+            <span asp-validation-for="AgentId" class="unactive"></span>
+        </div>
+
+        <hr />
+        <div class="form-group">
+            <label>Sentiment Configure</label>
+            <div class="ml-3">
+                <div class="form-group">
+                    <label>Negative</label>
+                    <div class="row" id="negative">
+                        <div class="col-2">
+                            <select class="form-control from">
+                                <option>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <select class="form-control to">
+
+                                <option>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                            </select>
+                        </div>
+                        <div class="col-8">
+                            <textarea rows="5" class="form-control mr-1 value"></textarea>
+                            @*<input class="form-control mr-1 value" placeholder="Default Comment" />*@
+                        </div>
+                    </div>
+                    <label class="mt-2">Normal</label>
+                    <div class="row" id="default">
+                        <div class="col-2">
+                            <select class="form-control from">
+                                <option>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <select class="form-control to">
+                                <option>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                            </select>
+                        </div>
+                        <div class="col-8">
+                            <textarea rows="5" class="form-control mr-1 value"></textarea>
+                        </div>
+                    </div>
+                    <label class="mt-2">Good</label>
+                    <div class="row" id="good">
+                        <div class="col-2">
+                            <select class="form-control from">
+                                <option>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                            </select>
+                        </div>
+                        <div class="col-2">
+                            <select class="form-control to">
+                                <option>0</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>10</option>
+                            </select>
+                        </div>
+                        <div class="col-8">
+                            <textarea rows="5" class="form-control mr-1 value"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input asp-for="CommentConfig" class="unactive" data-extend="empty" />
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('#PageAccessToken').change(function (e) {
+            if ($('#PageAccessToken').val()!=='') {
+                $("#btnNext").prop("disabled", false);
+            }
+        });
+        $('#btnNext').click(function () {
+            $('#wrap-page-accessToken').hide();
+            $('#wrap-page-config').show();
+            $('#footer-@ViewBag.FormId').show();
+            $(this).hide();
+        })
+
+        $('#btnGetPageAccess').click(function () {
+             if ($('#SocialConfigId').val() !== '') {
+                hub.invoke('getConnectionId')
+                .then(function (connectionId) {
+                    $.ajax({
+                        url: '@Url.Action("GetUrlGetCode","FanpageConfigure")',
+                        data: {
+                            SocialConfigId: $('#SocialConfigId').val(),
+                            ConnectionId:connectionId
+                        },
+                        success: function (resp) {
+                           window.open(
+                                resp.data,
+                                '',
+                               "width=500,height=500"
+                            );
+                        }
+                    })
+                });
+
+            }
+
+        })
+
+        $('#modal-add-edit-tbl-@ViewBag.TableId .modal-dialog').removeClass('modal-md').addClass('modal-lg');
+        $('#frm-@ViewBag.FormId').submit(function (e) {
+
+            var negative = {
+                Key: "negative",
+                Value:$('#negative .value').val(),
+                From:$('#negative .from').val(),
+                To:$('#negative .to').val()
+            };
+             var good = {
+                Key: "good",
+                Value:$('#good .value').val(),
+                From:$('#good .from').val(),
+                To:$('#good .to').val()
+            };
+
+             var de = {
+                Key: "default",
+                Value:$('#default .value').val(),
+                From:$('#default .from').val(),
+                To:$('#default .to').val()
+            };
+            var temp = [de, negative, good];
+            $('#CommentConfig').val(JSON.stringify(temp));
+        })
+        $('#modal-add-edit-tbl-@ViewBag.TableId').on('shown.bs.modal', function (e) {
+            $('#btnNext').show();
+            $('#wrap-page-accessToken').show();
+            $('#wrap-page-config').hide();
+            $('#footer-@ViewBag.FormId').hide();
+            if ($('#PageAccessToken').val() !== '') {
+                $("#btnNext").prop("disabled", false);
+            } else {
+                 $("#btnNext").prop("disabled", true);
+            }
+            var select2SocialConfig=$('#SocialConfigId').select2({
+                width: "100%",
+                theme: "bootstrap",
+                cache: false,
+                minimumResultsForSearch: Infinity,
+                placeholder: "Select Social Config",
+                ajax: {
+                    cache: false,
+                    url: '@Url.Action("GetListSocialConfigure", "SocialConfigure")',
+                    dataType: 'json',
+                    processResults: function (resp) {
+                        var data = $.map(resp.data, function (obj) {
+                            obj.id = obj.id;
+                            obj.text = obj.appName;
+                            return obj;
+                        });
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            })
+            var select2Agent=$('#AgentId').select2({
+                width: "100%",
+                theme: "bootstrap",
+                minimumResultsForSearch: Infinity,
+                placeholder: "Select Agent",
+                 cache: false,
+                ajax: {
+                    cache: false,
+                    url: '@Url.Action("GetUser", "User")',
+                    dataType: 'json',
+                    processResults: function (resp) {
+                        var data = $.map(resp.data, function (obj) {
+                            obj.id = obj.id;
+                            obj.text = obj.userName;
+                            return obj;
+                        });
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            })
+
+            var id = $('#Id').val();
+            if (id !== "") {
+
+            } else {
+                $('#AgentId').data('extend','empty')
+                $('#CommentConfig').data("extend", "empty");
+                $('#SocialConfigId').data("extend", "empty");
+            }
+             $.ajax({
+                 url: '@Url.Action("GetUser", "User")',
+                 dataType: 'json',
+                 cache: false,
+                 success: function (resp) {
+                     var iDAgent = $('#AgentId').data('extend') == 'empty' ? "" : $('#AgentId').data('extend');
+                     var option = new Option("Select Agent",-1, true, true);
+                    select2Agent.append(option);
+                     resp.data.forEach(function (model, index) {
+                         var option = new Option(model.userName, model.id, true, true);
+                         select2Agent.append(option);
+                     })
+                     select2Agent.select2("trigger", "select", {
+                        data: { id: iDAgent}
+                    });
+
+                }
+             })
+            $.ajax({
+              cache: false,
+              url: '@Url.Action("GetListSocialConfigure", "SocialConfigure")',
+                dataType: 'json',
+                success: function (resp) {
+                    var iDSocial = $('#SocialConfigId').data('extend') == 'empty' ?"":$('#SocialConfigId').data('extend') ;
+                    var option = new Option("Select Agent",-1, true, true);
+                    select2SocialConfig.append(option);
+                     resp.data.forEach(function (model, index) {
+                         var option = new Option(model.appName, model.id, true, true);
+                         select2SocialConfig.append(option);
+                     })
+                     select2SocialConfig.select2("trigger", "select", {
+                        data: { id:iDSocial }
+                    });
+                }
+            })
+            if ($('#CommentConfig').data("extend") !== "empty") {
+                var data = JSON.parse($('#CommentConfig').data("extend"));
+
+                $('#good .value').val(data.find(x=>x.Key=="good").Value);
+                $('#good .from').val(data.find(x=>x.Key=="good").From);
+                $('#good .to').val(data.find(x => x.Key == "good").To);
+
+                $('#default .value').val(data.find(x=>x.Key=="default").Value);
+                $('#default .from').val(data.find(x=>x.Key=="default").From);
+                $('#default .to').val(data.find(x => x.Key == "default").To);
+
+                  $('#negative .value').val(data.find(x=>x.Key=="negative").Value);
+                $('#negative .from').val(data.find(x=>x.Key=="negative").From);
+                $('#negative .to').val(data.find(x=>x.Key=="negative").To);
+            } else {
+
+            }
+
+        })
+    })
+</script>

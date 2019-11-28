@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using General;
 using Main.Interface;
 using Main.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MonitoringSocialNetworkWeb.Controllers
 {
+    [Authorize]
     public class SystemConfigureController : Controller
     {
         private readonly ISystemConfigureBusiness systemConfigureBusiness;

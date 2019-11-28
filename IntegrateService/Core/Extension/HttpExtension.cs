@@ -72,6 +72,26 @@ namespace General
             }
             return modelReturn;
         }
-
+        public async Task<T> InvokeDelete<T>(string url)
+        {
+            T modelReturn = default(T);
+            try
+            {
+                var httpResponse = await client.DeleteAsync(url);
+                if (httpResponse.IsSuccessStatusCode)
+                {
+                    modelReturn = JsonConvert.DeserializeObject<T>(await httpResponse.Content.ReadAsStringAsync());
+                }
+                else
+                {
+                    CoreLogger.Instance.Debug(this.CreateMessageLog("InvokeDelete: " + httpResponse.RequestMessage));
+                }
+            }
+            catch (System.Exception ex)
+            {
+                CoreLogger.Instance.Error(this.CreateMessageLog(ex.Message));
+            }
+            return modelReturn;
+        }
     }
 }

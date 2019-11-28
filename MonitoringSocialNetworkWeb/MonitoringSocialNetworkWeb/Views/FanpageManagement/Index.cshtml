@@ -1,0 +1,99 @@
+﻿@{
+    ViewData["Title"] = "Fanpage Management";
+    ViewBag.TableId = "FanpageManagement";
+}
+<h3>@ViewData["Title"]</h3>
+<div class="col-6">
+    <div class=" form-group row mb-3">
+        <label class="col-4 col-form-label pl-0">Select Fanpage</label>
+        <div class="col-6 unset-padding">
+            <select class="form-control js-states" id="searchFanpage">
+                <option value="-1">All</option>
+            </select>
+        </div>
+    </div>
+</div>
+<table id="tbl-@ViewBag.TableId" class="table table-striped dt-responsive nowrap tbl-crud">
+    <thead>
+        <tr>
+            <th class="all"></th>
+            <th class="all"></th>
+            <th class="all"></th>
+            <th class="all"></th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<script>
+
+    $(document).ready(function () {
+             $('#searchFanpage').select2({
+                width: "50%",
+                theme: "bootstrap",
+                minimumResultsForSearch: Infinity,
+                ajax: {
+                    cache: false,
+                    url: '@Url.Action("GetListFanPageConfigure", "FanpageConfigure")',
+                    dataType: 'json',
+                    processResults: function (resp) {
+                        resp.data.unshift({
+                            pageId: -1,
+                            pageTitle: "All"
+                        })
+                        var data = $.map(resp.data, function (obj) {
+                            obj.id = obj.pageId;
+                            obj.text = obj.pageTitle;
+                            return obj;
+                        });
+                        return {
+                            results: data
+                        };
+                    }
+                }
+            });
+             $('#searchFanpage').on('change.select2', function (e) {
+                var table = $('table[id="tbl-@ViewBag.TableId"].tbl-crud').DataTable();
+                table.ajax.reload();
+            });
+            generateTable(
+                {
+                    IdTable: 'tbl-@ViewBag.TableId',
+                    FixedColumn: 1,
+                    ReadAction: '@Url.Action("GetPostInfo", "FanpageManagement")',
+                    IsManage: false
+                },
+                [
+                    {
+                        data: "postId", title: "Post Id",
+                        render: function (data) {
+                            return "<span class=\"d-inline-block text-truncate\" style=\"max-width: 200px;\">" + data + "</span>"
+                        }
+                    },
+                    {
+                        data: "avgScore", title: "AVG Score",
+                        render: function (data) {
+                            return "<span class=\"d-inline-block text-truncate\" style=\"max-width: 200px;\">" + data + "</span>"
+                        }
+                    },
+                     {
+                        data: "numberComment", title: "Number Of Comment",
+                        render: function (data) {
+                            return "<span class=\"d-inline-block text-truncate\" style=\"max-width: 200px;\">" + data + "</span>"
+                        }
+                    },
+                      {
+                        data: "numberNegative", title: "Number Of Negative",
+                        render: function (data) {
+                            return "<span class=\"d-inline-block text-truncate\" style=\"max-width: 200px;\">" + data + "</span>"
+                        }
+                    }
+                ],
+                {
+                    pageId: function () {
+                        return $('#searchFanpage').val();
+                    }
+                }
+            );
+        })
+</script>
