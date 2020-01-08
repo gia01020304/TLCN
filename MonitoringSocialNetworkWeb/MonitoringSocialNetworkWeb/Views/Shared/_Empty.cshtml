@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Version"] = "v=1.0";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Social Care</title>
+
+    <script src="~/lib/jquery/dist/jquery.js?@ViewData["Version"]"></script>
+
+
+</head>
+<body>
+    <style>
+        .footer {
+            left: 400px;
+            border-top: unset;
+        }
+    </style>
+    <div class="loading" id="spinner">Loading&#8230;</div>
+    @RenderBody()
+    <footer class="footer text-center">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    @DateTime.Now.Year © Social Care - Developed by Dreamer Group
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

@@ -16,8 +16,7 @@ namespace Main.Model
         [Required]
         [Display(Name = "App Secret")]
         public string AppSecret { get; set; }
-        [Display(Name = "Token")]
-        public string Token { get; set; }
+     
         [Required]
         [Display(Name = "App Type")]
         public AppType AppType { get; set; }

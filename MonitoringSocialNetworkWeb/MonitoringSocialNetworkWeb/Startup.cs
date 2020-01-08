@@ -74,11 +74,16 @@ namespace MonitoringSocialNetworkWeb
             services.AddTransient<IFanpageConfigBusiness, FanpageConfigBusiness>();
             services.AddTransient<IFacebookBusiness, FacebookBusiness>();
             services.AddTransient<ISystemConfigureBusiness, SystemConfigureBusiness>();
+            services.AddTransient<IDatasetsBusiness, DatasetsBusiness>();
+            services.AddTransient<IWebhooksBusiness, WebhooksBusiness>();
             services.AddScoped<UserManager<ApplicationUser>>();
             services.AddHostedService<BackgroundSendMail>();
             services.AddHostedService<BackgroundTrainModel>();
             #endregion
-            //MLSimilarCommentAnalysis.Instance.TrainDataSet();
+            if (Configuration.GetSection("Mode").Value == "Pro")
+            {
+                MLSimilarCommentAnalysis.Instance.TrainDataSet();
+            }
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddSignalR();
         }

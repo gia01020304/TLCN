@@ -18,6 +18,7 @@ namespace MonitoringSocialNetworkWeb
         {
             try
             {
+                CoreLogger.Instance.Debug("Server Start");
                 CreateWebHostBuilder(args).Build().Run();
             }
             catch (Exception ex)

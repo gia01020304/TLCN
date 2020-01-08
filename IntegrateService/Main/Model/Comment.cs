@@ -24,6 +24,9 @@ namespace Main.Model
         public bool Lock { get; set; }
         public DateTime? DateSend { get; set; }
         public DateTime? DateReceived { get; set; }
+        public string FromName { get; set; }
+        public string ReceiverName { get; set; }
+        public int ContactId { get; set; }
     }
 
     public class CommentFilter

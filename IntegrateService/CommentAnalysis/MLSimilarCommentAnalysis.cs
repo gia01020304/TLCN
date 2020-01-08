@@ -70,6 +70,7 @@ namespace CommentAnalysis
                 var pipeline = ProcessData();
                 var trainingPipeline = BuildAndTrainModel(trainingDataView, pipeline);
                 Evaluate(trainingDataView.Schema);
+                CoreLogger.Instance.Debug("Train model");
             }
             catch (Exception ex)
             {

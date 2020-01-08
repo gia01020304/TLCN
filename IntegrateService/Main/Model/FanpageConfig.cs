@@ -32,59 +32,59 @@ namespace Main.Model
         /// Analysis string to List AutoComment
         /// </summary>
         /// <returns></returns>
-        private List<CommentConfig> GetCommentConfig()
-        {
-            List<CommentConfig> temp = null;
-            try
+            private List<CommentConfig> GetCommentConfig()
             {
-                if (!string.IsNullOrEmpty(CommentConfig))
+                List<CommentConfig> temp = null;
+                try
                 {
-                    temp = JsonConvert.DeserializeObject<List<CommentConfig>>(CommentConfig);
+                    if (!string.IsNullOrEmpty(CommentConfig))
+                    {
+                        temp = JsonConvert.DeserializeObject<List<CommentConfig>>(CommentConfig);
+                    }
                 }
-            }
-            catch (Exception ex)
-            {
-                CoreLogger.Instance.Error(this.CreateMessageLog(ex.Message));
-            }
-            return temp;
-        }
-        public string GetCommentConfig(int score, string key = "default")
-        {
-            string commentConfig = string.Empty;
-            try
-            {
-                var temp = GetCommentConfig();
-                var model = temp.Where(x => x.From <= score && score <= x.To).FirstOrDefault();
-                if (model == null)
+                catch (Exception ex)
                 {
-                    model = temp.Where(x => x.Key == key).FirstOrDefault();
+                    CoreLogger.Instance.Error(this.CreateMessageLog(ex.Message));
                 }
-                commentConfig = model.Value;
+                return temp;
             }
-            catch (Exception ex)
+            public string GetCommentConfig(int score, string key = "default")
             {
-                CoreLogger.Instance.Error(this.CreateMessageLog(ex.Message));
-            }
-            return commentConfig;
-        }
-        public bool IsNegative(int score, string key = "negative")
-        {
-            bool rsBool = false;
-            try
-            {
-                var temp = GetCommentConfig();
-                var model = temp.Where(x => x.From <= score && score <= x.To && x.Key.ToLower() == key.ToLower()).FirstOrDefault();
-                if (model != null)
+                string commentConfig = string.Empty;
+                try
                 {
-                    rsBool = true;
+                    var temp = GetCommentConfig();
+                    var model = temp.Where(x => x.From <= score && score <= x.To).FirstOrDefault();
+                    if (model == null)
+                    {
+                        model = temp.Where(x => x.Key == key).FirstOrDefault();
+                    }
+                    commentConfig = model.Value;
                 }
+                catch (Exception ex)
+                {
+                    CoreLogger.Instance.Error(this.CreateMessageLog(ex.Message));
+                }
+                return commentConfig;
             }
-            catch (Exception ex)
+            public bool IsNegative(int score, string key = "negative")
             {
-                CoreLogger.Instance.Error(this.CreateMessageLog(ex.Message));
+                bool rsBool = false;
+                try
+                {
+                    var temp = GetCommentConfig();
+                    var model = temp.Where(x => x.From <= score && score <= x.To && x.Key.ToLower() == key.ToLower()).FirstOrDefault();
+                    if (model != null)
+                    {
+                        rsBool = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    CoreLogger.Instance.Error(this.CreateMessageLog(ex.Message));
+                }
+                return rsBool;
             }
-            return rsBool;
-        }
     }
     public class FanpageConfigFilter
     {

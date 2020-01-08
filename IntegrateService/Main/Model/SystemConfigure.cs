@@ -38,5 +38,7 @@ namespace Main.Model
         public int LogLoss { get; set; }
         [Display(Name = "Log Loss Reduction")]
         public int LogLossReduction { get; set; }
+        [Display(Name = "End Point")]
+        public string EndPoint { get; set; }
     }
 }

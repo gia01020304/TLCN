@@ -19,17 +19,19 @@ namespace Business
                 model.FBUrlApi = SqlDAL.Instance.GetSetting("FBUrlApi").Value;
                 model.MSEndPoint = SqlDAL.Instance.GetSetting("MSEndPoint").Value;
                 model.MSKey = SqlDAL.Instance.GetSetting("MSKey").Value;
-                model.SMTPPassword = SqlDAL.Instance.GetSetting("SMTPPassword").Value; 
+                model.SMTPPassword = SqlDAL.Instance.GetSetting("SMTPPassword").Value;
                 model.SMTPPort = SqlDAL.Instance.GetSetting("SMTPPort").Value;
                 model.SMTPSender = SqlDAL.Instance.GetSetting("SMTPSender").Value;
                 model.SMTPSenderName = SqlDAL.Instance.GetSetting("SMTPSenderName").Value;
                 model.MailServer = SqlDAL.Instance.GetSetting("MailServer").Value;
 
-                model.MicroAccuracy = int.Parse(SqlDAL.Instance.GetSetting("MicroAccuracy").Value);
-                model.MacroAccuracy = int.Parse(SqlDAL.Instance.GetSetting("MacroAccuracy").Value);
-                model.LogLoss = int.Parse(SqlDAL.Instance.GetSetting("LogLoss").Value);
-                model.LogLossReduction = int.Parse(SqlDAL.Instance.GetSetting("LogLossReduction").Value);
-               
+                //model.MicroAccuracy = int.Parse(SqlDAL.Instance.GetSetting("MicroAccuracy").Value);
+                //model.MacroAccuracy = int.Parse(SqlDAL.Instance.GetSetting("MacroAccuracy").Value);
+                //model.LogLoss = int.Parse(SqlDAL.Instance.GetSetting("LogLoss").Value);
+                //model.LogLossReduction = int.Parse(SqlDAL.Instance.GetSetting("LogLossReduction").Value);
+
+                model.EndPoint = SqlDAL.Instance.GetSetting("EndPoint").Value;
+
             }
             catch (Exception ex)
             {
@@ -76,6 +78,11 @@ namespace Business
                     rsBool = false;
                 }
                 if (SqlDAL.Instance.SaveSettingModel(new SettingModel() { Key = "MailServer", Value = model.MailServer }) < 0)
+                {
+                    rsBool = false;
+                }
+
+                if (SqlDAL.Instance.SaveSettingModel(new SettingModel() { Key = "EndPoint", Value = model.EndPoint }) < 0)
                 {
                     rsBool = false;
                 }

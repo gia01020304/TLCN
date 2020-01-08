@@ -14,5 +14,6 @@ namespace Main
         FBTokenInfo CheckStatusToken(string token);
         FBSubscribedInfo GetSubscribedInfo(FanpageConfig model);
         bool ChangeChangeSubscribed(FanpageConfig model, string field);
+        
     }
 }

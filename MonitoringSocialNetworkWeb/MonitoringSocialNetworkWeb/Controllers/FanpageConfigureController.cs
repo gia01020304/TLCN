@@ -120,13 +120,14 @@ namespace Education
             {
                 Id = model.SocialConfigId
             });
-            var url = string.Format("https://www.facebook.com/v5.0/dialog/oauth?response_type=token&display=popup&client_id={0}&redirect_uri={1}/FanPageConfigure/CallBackGetCode&scope=email%2Cmanage_pages%2Cpages_messaging_phone_number%2Cpages_show_list%2Cpages_messaging%2Cpages_messaging_subscriptions&state={2}"
+            var url = string.Format("https://www.facebook.com/v5.0/dialog/oauth?response_type=token&display=popup&client_id={0}&redirect_uri={1}/FanPageConfigure/CallBackGetCode&auth_type=reauthenticate&scope=manage_pages,pages_messaging,pages_messaging_subscriptions&state={2}"
                                 , socialConfig.AppId
-                                , "https://f14b4b83.ngrok.io"
+                                , $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}"
+                                //, "https://4b67bf72.ngrok.io"
                                 , "{connectionId:'" + model.ConnectionId + "',socialConfigId:'" + model.SocialConfigId + "'}");
             return Json(new { success = true, data = url });
-            //return Json(new { success = true, data = $"https://www.facebook.com/v5.0/dialog/oauth?response_type=token&display=popup&client_id={socialConfig.AppId}&redirect_uri=https://f14b4b83.ngrok.io/FanPageConfigure/CallBackGetCode&scope=email%2Cmanage_pages%2Cpages_messaging_phone_number%2Cpages_show_list%2Cpages_messaging%2Cpages_messaging_subscriptions&state=" });
-            //return Json(new { success = true, data = $"https://www.facebook.com/v5.0/dialog/oauth?response_type=token&display=popup&client_id={socialConfig.AppId}&redirect_uri=https://ff7c660e.ngrok.io/api/facebook/getaccess&scope=email%2Cmanage_pages%2Cpages_messaging_phone_number%2Cpages_show_list%2Cpages_messaging%2Cpages_messaging_subscriptions%2Cpublish_pages" });
+            //return Json(new { success = true, data = $"https://www.facebook.com/v5.0/dialog/oauth?response_type=token&display=popup&client_id={socialConfig.AppId}&redirect_uri=https://f14b4b83.ngrok.io/FanPageConfigure/CallBackGetCode&scope=manage_pages&state=" });
+            //return Json(new { success = true, data = $"https://www.facebook.com/v5.0/dialog/oauth?response_type=token&display=popup&client_id={socialConfig.AppId}&redirect_uri=https://ff7c660e.ngrok.io/api/facebook/getaccess&scope=email,manage_pages,pages_messaging_phone_number,pages_show_list,pages_messaging,pages_messaging_subscriptions,publish_pages" });
         }
         [AllowAnonymous]
         public IActionResult CallBackGetCode()

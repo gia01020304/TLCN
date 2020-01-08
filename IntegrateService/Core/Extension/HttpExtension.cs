@@ -29,6 +29,12 @@ namespace General
         {
             client = new HttpClient();
         }
+        /// <summary>
+        /// InvokeGet
+        /// </summary>
+        /// <typeparam name="T">T is result responsed</typeparam>
+        /// <param name="url"></param>
+        /// <returns></returns>
         public async Task<T> InvokeGet<T>(string url)
         {
             T model = default(T);
@@ -50,6 +56,14 @@ namespace General
             }
             return model;
         }
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T">T is result responsed</typeparam>
+        /// <typeparam name="Y">Y is model post into api</typeparam>
+        /// <param name="url"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public async Task<T> InvokePost<T, Y>(string url, Y model)
         {
             T modelReturn = default(T);
@@ -64,6 +78,28 @@ namespace General
                 else
                 {
                     CoreLogger.Instance.Debug(this.CreateMessageLog("InvokePost: " + httpResponse.RequestMessage));
+                }
+            }
+            catch (System.Exception ex)
+            {
+                CoreLogger.Instance.Error(this.CreateMessageLog(ex.Message));
+            }
+            return modelReturn;
+        }
+        public async Task<T> InvokePut<T, Y>(string url, Y model)
+        {
+            T modelReturn = default(T);
+            try
+            {
+                var content = JsonConvert.SerializeObject(model);
+                var httpResponse = await client.PutAsync(url, new StringContent(content, Encoding.Default, "application/json"));
+                if (httpResponse.IsSuccessStatusCode)
+                {
+                    modelReturn = JsonConvert.DeserializeObject<T>(await httpResponse.Content.ReadAsStringAsync());
+                }
+                else
+                {
+                    CoreLogger.Instance.Debug(this.CreateMessageLog("InvokePut: " + httpResponse.RequestMessage));
                 }
             }
             catch (System.Exception ex)

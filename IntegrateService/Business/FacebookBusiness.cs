@@ -54,12 +54,12 @@ namespace Business
             bool rsBool = false;
             try
             {
-                if (model?.SocialConfig != null && !string.IsNullOrEmpty(model.SocialConfig.Token))
+                if (!string.IsNullOrEmpty(model.PageAccessToken))
                 {
                     var url = $"{FBUrlApi}/{model.CommentId}/comments";
                     var rs = HttpExtension.Instance.InvokePost<FBResponsed, FBPostComment>(url, new FBPostComment
                     {
-                        access_token = model.SocialConfig.Token,
+                        access_token = model.PageAccessToken,
                         message = model.Comment
                     }).Result;
                     if (rs != null)
@@ -186,6 +186,8 @@ namespace Business
             }
             return rs;
         }
+
+
 
     }
 }
